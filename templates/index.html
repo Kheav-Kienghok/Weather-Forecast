@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+
+    <div class="form-container">
+        <form action="/" method="post">
+            <fieldset>
+                <legend>Weather Forecast</legend>
+                <label for="location">Please Enter the Location:</label>
+                <div class="input-container">
+                    <input type="text" id="location" name="location" required placeholder="Example: Japan">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    {% if weather_data %}
+    <div class="card-container">
+        <div class="card text-body">
+            <div class="card-body">
+                <div class="weather-header">
+                    <h6 class="flex-grow-1">{{ weather_data.location }}</h6>
+                    <h6>{{ weather_data.hour }}</h6>
+                </div>
+                <div class="text-center mb-4">
+                    <div class="weather-temp">{{ weather_data.temperature }}°C</div>
+                    <div class="weather-status">{{ weather_data.weather_status }}</div>
+                </div>
+                <div class="weather-details">
+                    <div class="weather-info">
+                        <div><i class="fas fa-wind"></i> <span>{{ weather_data.wind }}</span></div>
+                        <div><i class="fas fa-tint"></i> <span>{{ weather_data.humidity }}</span></div>
+                        <div><i class="fas fa-sun"></i> <span>{{ weather_data.wind_per_hr }}h</span></div>
+                    </div>
+                    <div class="weather-icon">
+                        <img src="{{ weather_icon_url(weather_data.weather_status) }}" alt="Weather Icon" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js" integrity="sha384-k7l7rr3xCh5n/WXWZ8DR2X4y9UhlgPp2wXzFq2T+HE6H/OXbVPSs6czC53JOmQG6" crossorigin="anonymous"></script>
+    {% endblock %}
+
+</body>
+</html>
